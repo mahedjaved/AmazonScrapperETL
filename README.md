@@ -39,13 +39,24 @@ The `Adventure Works` sample is an OLTP (online transaction processing) database
 
 link to DB -> (https://github.com/Microsoft/sql-server-samples/releases/tag/adventureworks)
 
-This milestone we first setup SQL Server, download the sample `AdventureWorks dataset` version 2016. Connect *SQL Server Developer 2019* version with *SQL Server Management Studio 2019* and Visual Studio.
+On the other hand, `Visual Studio` is an integrated development enviroment (IDE), a tool used to develop computer programmes, web apps, web services and mobile apps. Visual Studio comes with various `workloads`, a bundle of tools that aid in further productive development.
 
-The database is restored as follows.
+Then, `SQL Server Data Tools (SSDT)` is a modern development tool for building SQL Server relational databases, Azure SQL Databases, Analysis Services data models, Integration Services packages and Reporting Services reports.
+
+Finally, `SSIS, SSAS and SSRS` are incorporated as part of SQL Server Data Tools. This is present as the extensions for Visual Studio, the extensions are `SQL Server Integration Services Projects` (SSIS), then `Microsoft Reporting Services Projects` (SSRS) and then finally, `Microsoft Analysis Services Projects` (SSAS).
+
+
+In this milestone, firstly the SQL Server was setup, then the sample database `AdventureWorks dataset` version 2016 was downloaded. The *SQL Server (Developer version) 2019*  was made to connect with *SQL Server Management Studio 2019*. Here, the database was restored as follows.
 
 ![Alt text](<Screenshot 2023-12-18 at 21.16.57.png>)
 
 ![Alt text](<Screenshot 2023-12-18 at 21.20.37.png>)
+
+Next, Visual Studio 2019 (the Community edition) was installed. Three workloads were chosen, the ASP.Net Core web development workload, the .NET Framework for desktop development and cloud engineering and the Data storage and processing. Once setup, the apppropriate SSIS, SSRS and SSAS extensions were installed.
+
+
+
+
 ---
 
  ### Milestone 2
