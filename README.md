@@ -33,8 +33,19 @@ Shif
 
  ### Milestone 1
  
-This mi
+ SQL Server is a `relational database management system` (RDBMS). Its primary function is `storing` and `retrieving` data requested by applications. These applications may run on the same computer or another computer across a network or the internet. 
 
+The `Adventure Works` sample is an OLTP (online transaction processing) database. The AdventureWorks database supports a fictitious, multinational manufacturing company called Adventure Works Cycles.
+
+link to DB -> (https://github.com/Microsoft/sql-server-samples/releases/tag/adventureworks)
+
+This milestone we first setup SQL Server, download the sample `AdventureWorks dataset` version 2016. Connect *SQL Server Developer 2019* version with *SQL Server Management Studio 2019* and Visual Studio.
+
+The database is restored as follows.
+
+![Alt text](<Screenshot 2023-12-18 at 21.16.57.png>)
+
+![Alt text](<Screenshot 2023-12-18 at 21.20.37.png>)
 ---
 
  ### Milestone 2
