@@ -85,7 +85,9 @@ Secondly, we set te destination database, we create a new database. We give it t
 
 ![Alt text](create_destination_table.png)
 
-Thirdly, in order to transfer the database, we are going to develop our own ETL pipeline. We first setup a new SSIS project called `SSIS Amazon ETL Pipeline`.
+Thirdly, in order to transfer the database, we are going to develop our own ETL pipeline. We first setup a new SSIS project called `SSIS Amazon ETL Pipeline`. Next, we configure the source and destination for the SSIS project. Setup a dataflow, the source and the destination. Ensure that the `Microsoft NT Integrated Scurity` is selected for a robust authentication when setting the `Source Assistant`. We then ensure if the connection is successfull as shown below.
+
+![Alt text](image.png)
 
 
 <!-- Extracting data from the table Customer in the source database AdventureWorksLT2016
