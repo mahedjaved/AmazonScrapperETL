@@ -85,38 +85,18 @@ Secondly, we set te destination database, we create a new database. We give it t
 
 ![Alt text](create_destination_table.png)
 
-Thirdly, in order to 
+Thirdly, in order to transfer the database, we are going to develop our own ETL pipeline. We first setup a new SSIS project called `SSIS Amazon ETL Pipeline`.
 
 
-Extracting data from the table Customer in the source database AdventureWorksLT2016
-
-
+<!-- Extracting data from the table Customer in the source database AdventureWorksLT2016
 
 We will Manipulate and uppercase the  Customer.CompanyName
-
-
-
 Will will then Load data into table Customer in the destination database
-
-
-
 that will be called CustomerSampling
-
-
-
 (Both the source and destination database will be on the same
-
-
-
 SQL Server in this course. But  in an enterprise environment
-
-
-
 they most likely will be on different SQL Servers. )
-
-
-
-I will show you how to install the source database and create the destination database.
+I will show you how to install the source database and create the destination database. -->
 
 
 

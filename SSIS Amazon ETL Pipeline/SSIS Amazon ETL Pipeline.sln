@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.34301.259
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{C9674DCB-5085-4A16-B785-4C70DD1589BD}") = "SSIS Amazon ETL Pipeline", "SSIS Amazon ETL Pipeline\SSIS Amazon ETL Pipeline.dtproj", "{DB9FD44C-CAB4-4B04-AD0B-9EDD2EFE06A6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DB9FD44C-CAB4-4B04-AD0B-9EDD2EFE06A6}.Development|Default.ActiveCfg = Development
+		{DB9FD44C-CAB4-4B04-AD0B-9EDD2EFE06A6}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7A65962D-AB4D-4CD3-BA49-09063D478ADA}
+	EndGlobalSection
+EndGlobal
