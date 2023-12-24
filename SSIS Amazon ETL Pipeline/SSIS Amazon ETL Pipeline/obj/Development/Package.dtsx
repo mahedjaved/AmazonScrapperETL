@@ -1,0 +1,965 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="12/24/2023 3:34:25 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="MJERAZOR"
+  DTS:CreatorName="MJERAZOR\ksfma"
+  DTS:DTSID="{F3FA40E5-7F23-4928-BB2D-300AAD2D6B4C}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5270.0"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:VersionBuild="4"
+  DTS:VersionGUID="{158227FB-9755-4604-8873-A48F1AFA684C}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[mjerazor\SQLEXPRESS.Destination_Customer_Sampling]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{BA2AAAAB-80F5-42EF-B6BF-2DD188DCEE5C}"
+      DTS:ObjectName="mjerazor\SQLEXPRESS.Destination_Customer_Sampling">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=mjerazor\SQLEXPRESS;Initial Catalog=Destination_Customer_Sampling;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[mjerazor\SQLEXPRESS.SourceAdventureWorksLT2019]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{BDF12134-8F58-4BD4-B9B1-431198CC4CCC}"
+      DTS:ObjectName="mjerazor\SQLEXPRESS.SourceAdventureWorksLT2019">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=mjerazor\SQLEXPRESS;Initial Catalog=SourceAdventureWorksLT2019;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Customer Import"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{39143FE4-24A0-407E-A8C6-A5B7285C74DB}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Customer Import"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Customer Import\Add Derived Columns"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Add Derived Columns"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Customer Import\Add Derived Columns.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Customer Import\Add Derived Columns.Inputs[Derived Column Input].Columns[CompanyName]"
+                      cachedDataType="wstr"
+                      cachedLength="128"
+                      cachedName="CompanyName"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[CompanyName]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Customer Import\Add Derived Columns.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Customer Import\Add Derived Columns.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Customer Import\Add Derived Columns.Outputs[Derived Column Output].Columns[CompanyNameUppercase]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="128"
+                      lineageId="Package\Customer Import\Add Derived Columns.Outputs[Derived Column Output].Columns[CompanyNameUppercase]"
+                      name="CompanyNameUppercase"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[UPPER](#{Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[CompanyName]})</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">UPPER(CompanyName)</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Customer Import\Add Derived Columns.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Customer Import\Add Derived Columns.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Customer Import\Add Derived Columns.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Customer Import\Add Derived Columns.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Customer Import\Add Derived Columns.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Customer Import\Add Derived Columns.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Customer Import\Destination Customer"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Destination Customer"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[Customer]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">true</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Customer Import\Destination Customer.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[mjerazor\SQLEXPRESS.Destination_Customer_Sampling]"
+                  connectionManagerRefId="Package.ConnectionManagers[mjerazor\SQLEXPRESS.Destination_Customer_Sampling]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].Columns[CustomerID]"
+                      cachedDataType="i4"
+                      cachedName="CustomerID"
+                      externalMetadataColumnId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].ExternalColumns[CustomerID]"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[CustomerID]" />
+                    <inputColumn
+                      refId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].Columns[NameStyle]"
+                      cachedDataType="bool"
+                      cachedName="NameStyle"
+                      externalMetadataColumnId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].ExternalColumns[NameStyle]"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[NameStyle]" />
+                    <inputColumn
+                      refId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].Columns[Title]"
+                      cachedDataType="wstr"
+                      cachedLength="8"
+                      cachedName="Title"
+                      externalMetadataColumnId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].ExternalColumns[Title]"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[Title]" />
+                    <inputColumn
+                      refId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].Columns[FirstName]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="FirstName"
+                      externalMetadataColumnId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].ExternalColumns[FirstName]"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[FirstName]" />
+                    <inputColumn
+                      refId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].Columns[MiddleName]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="MiddleName"
+                      externalMetadataColumnId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].ExternalColumns[MiddleName]"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[MiddleName]" />
+                    <inputColumn
+                      refId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].Columns[LastName]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="LastName"
+                      externalMetadataColumnId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].ExternalColumns[LastName]"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[LastName]" />
+                    <inputColumn
+                      refId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].Columns[Suffix]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="Suffix"
+                      externalMetadataColumnId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].ExternalColumns[Suffix]"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[Suffix]" />
+                    <inputColumn
+                      refId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].Columns[SalesPerson]"
+                      cachedDataType="wstr"
+                      cachedLength="256"
+                      cachedName="SalesPerson"
+                      externalMetadataColumnId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].ExternalColumns[SalesPerson]"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[SalesPerson]" />
+                    <inputColumn
+                      refId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].Columns[EmailAddress]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="EmailAddress"
+                      externalMetadataColumnId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].ExternalColumns[EmailAddress]"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[EmailAddress]" />
+                    <inputColumn
+                      refId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].Columns[Phone]"
+                      cachedDataType="wstr"
+                      cachedLength="25"
+                      cachedName="Phone"
+                      externalMetadataColumnId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].ExternalColumns[Phone]"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[Phone]" />
+                    <inputColumn
+                      refId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].Columns[PasswordHash]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="128"
+                      cachedName="PasswordHash"
+                      externalMetadataColumnId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].ExternalColumns[PasswordHash]"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[PasswordHash]" />
+                    <inputColumn
+                      refId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].Columns[PasswordSalt]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="PasswordSalt"
+                      externalMetadataColumnId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].ExternalColumns[PasswordSalt]"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[PasswordSalt]" />
+                    <inputColumn
+                      refId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].Columns[rowguid]"
+                      cachedDataType="guid"
+                      cachedName="rowguid"
+                      externalMetadataColumnId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].ExternalColumns[rowguid]"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[rowguid]" />
+                    <inputColumn
+                      refId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].Columns[ModifiedDate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="ModifiedDate"
+                      externalMetadataColumnId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].ExternalColumns[ModifiedDate]"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[ModifiedDate]" />
+                    <inputColumn
+                      refId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].Columns[CompanyNameUppercase]"
+                      cachedDataType="wstr"
+                      cachedLength="128"
+                      cachedName="CompanyNameUppercase"
+                      externalMetadataColumnId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].ExternalColumns[CompanyName]"
+                      lineageId="Package\Customer Import\Add Derived Columns.Outputs[Derived Column Output].Columns[CompanyNameUppercase]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].ExternalColumns[CustomerID]"
+                      dataType="i4"
+                      name="CustomerID" />
+                    <externalMetadataColumn
+                      refId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].ExternalColumns[NameStyle]"
+                      dataType="nText"
+                      name="NameStyle" />
+                    <externalMetadataColumn
+                      refId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].ExternalColumns[Title]"
+                      dataType="wstr"
+                      length="8"
+                      name="Title" />
+                    <externalMetadataColumn
+                      refId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].ExternalColumns[FirstName]"
+                      dataType="nText"
+                      name="FirstName" />
+                    <externalMetadataColumn
+                      refId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].ExternalColumns[MiddleName]"
+                      dataType="nText"
+                      name="MiddleName" />
+                    <externalMetadataColumn
+                      refId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].ExternalColumns[LastName]"
+                      dataType="nText"
+                      name="LastName" />
+                    <externalMetadataColumn
+                      refId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].ExternalColumns[Suffix]"
+                      dataType="wstr"
+                      length="10"
+                      name="Suffix" />
+                    <externalMetadataColumn
+                      refId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].ExternalColumns[CompanyName]"
+                      dataType="wstr"
+                      length="128"
+                      name="CompanyName" />
+                    <externalMetadataColumn
+                      refId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].ExternalColumns[SalesPerson]"
+                      dataType="wstr"
+                      length="256"
+                      name="SalesPerson" />
+                    <externalMetadataColumn
+                      refId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].ExternalColumns[EmailAddress]"
+                      dataType="wstr"
+                      length="50"
+                      name="EmailAddress" />
+                    <externalMetadataColumn
+                      refId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].ExternalColumns[Phone]"
+                      dataType="nText"
+                      name="Phone" />
+                    <externalMetadataColumn
+                      refId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].ExternalColumns[PasswordHash]"
+                      codePage="1252"
+                      dataType="str"
+                      length="128"
+                      name="PasswordHash" />
+                    <externalMetadataColumn
+                      refId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].ExternalColumns[PasswordSalt]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="PasswordSalt" />
+                    <externalMetadataColumn
+                      refId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].ExternalColumns[rowguid]"
+                      dataType="guid"
+                      name="rowguid" />
+                    <externalMetadataColumn
+                      refId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input].ExternalColumns[ModifiedDate]"
+                      dataType="dbTimeStamp"
+                      name="ModifiedDate" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Customer Import\Destination Customer.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Customer Import\Destination Customer.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Customer Import\Destination Customer.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Customer Import\Destination Customer.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Customer Import\Destination Customer.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Customer Import\Source Customer"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Source Customer"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[SalesLT].[Customer]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Customer Import\Source Customer.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[mjerazor\SQLEXPRESS.SourceAdventureWorksLT2019]"
+                  connectionManagerRefId="Package.ConnectionManagers[mjerazor\SQLEXPRESS.SourceAdventureWorksLT2019]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[CustomerID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].ExternalColumns[CustomerID]"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[CustomerID]"
+                      name="CustomerID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[NameStyle]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].ExternalColumns[NameStyle]"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[NameStyle]"
+                      name="NameStyle"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[Title]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].ExternalColumns[Title]"
+                      length="8"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[Title]"
+                      name="Title"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[FirstName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].ExternalColumns[FirstName]"
+                      length="50"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[FirstName]"
+                      name="FirstName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[MiddleName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].ExternalColumns[MiddleName]"
+                      length="50"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[MiddleName]"
+                      name="MiddleName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[LastName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].ExternalColumns[LastName]"
+                      length="50"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[LastName]"
+                      name="LastName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[Suffix]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].ExternalColumns[Suffix]"
+                      length="10"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[Suffix]"
+                      name="Suffix"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[CompanyName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].ExternalColumns[CompanyName]"
+                      length="128"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[CompanyName]"
+                      name="CompanyName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[SalesPerson]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].ExternalColumns[SalesPerson]"
+                      length="256"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[SalesPerson]"
+                      name="SalesPerson"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[EmailAddress]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].ExternalColumns[EmailAddress]"
+                      length="50"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[EmailAddress]"
+                      name="EmailAddress"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[Phone]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].ExternalColumns[Phone]"
+                      length="25"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[Phone]"
+                      name="Phone"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[PasswordHash]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].ExternalColumns[PasswordHash]"
+                      length="128"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[PasswordHash]"
+                      name="PasswordHash"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[PasswordSalt]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].ExternalColumns[PasswordSalt]"
+                      length="10"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[PasswordSalt]"
+                      name="PasswordSalt"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[rowguid]"
+                      dataType="guid"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].ExternalColumns[rowguid]"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[rowguid]"
+                      name="rowguid"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[ModifiedDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].ExternalColumns[ModifiedDate]"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].Columns[ModifiedDate]"
+                      name="ModifiedDate"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].ExternalColumns[CustomerID]"
+                      dataType="i4"
+                      name="CustomerID" />
+                    <externalMetadataColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].ExternalColumns[NameStyle]"
+                      dataType="bool"
+                      name="NameStyle" />
+                    <externalMetadataColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].ExternalColumns[Title]"
+                      dataType="wstr"
+                      length="8"
+                      name="Title" />
+                    <externalMetadataColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].ExternalColumns[FirstName]"
+                      dataType="wstr"
+                      length="50"
+                      name="FirstName" />
+                    <externalMetadataColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].ExternalColumns[MiddleName]"
+                      dataType="wstr"
+                      length="50"
+                      name="MiddleName" />
+                    <externalMetadataColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].ExternalColumns[LastName]"
+                      dataType="wstr"
+                      length="50"
+                      name="LastName" />
+                    <externalMetadataColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].ExternalColumns[Suffix]"
+                      dataType="wstr"
+                      length="10"
+                      name="Suffix" />
+                    <externalMetadataColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].ExternalColumns[CompanyName]"
+                      dataType="wstr"
+                      length="128"
+                      name="CompanyName" />
+                    <externalMetadataColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].ExternalColumns[SalesPerson]"
+                      dataType="wstr"
+                      length="256"
+                      name="SalesPerson" />
+                    <externalMetadataColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].ExternalColumns[EmailAddress]"
+                      dataType="wstr"
+                      length="50"
+                      name="EmailAddress" />
+                    <externalMetadataColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].ExternalColumns[Phone]"
+                      dataType="wstr"
+                      length="25"
+                      name="Phone" />
+                    <externalMetadataColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].ExternalColumns[PasswordHash]"
+                      codePage="1252"
+                      dataType="str"
+                      length="128"
+                      name="PasswordHash" />
+                    <externalMetadataColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].ExternalColumns[PasswordSalt]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="PasswordSalt" />
+                    <externalMetadataColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].ExternalColumns[rowguid]"
+                      dataType="guid"
+                      name="rowguid" />
+                    <externalMetadataColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output].ExternalColumns[ModifiedDate]"
+                      dataType="dbTimeStamp"
+                      name="ModifiedDate" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Error Output].Columns[CustomerID]"
+                      dataType="i4"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Error Output].Columns[CustomerID]"
+                      name="CustomerID" />
+                    <outputColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Error Output].Columns[NameStyle]"
+                      dataType="bool"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Error Output].Columns[NameStyle]"
+                      name="NameStyle" />
+                    <outputColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Error Output].Columns[Title]"
+                      dataType="wstr"
+                      length="8"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Error Output].Columns[Title]"
+                      name="Title" />
+                    <outputColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Error Output].Columns[FirstName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Error Output].Columns[FirstName]"
+                      name="FirstName" />
+                    <outputColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Error Output].Columns[MiddleName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Error Output].Columns[MiddleName]"
+                      name="MiddleName" />
+                    <outputColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Error Output].Columns[LastName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Error Output].Columns[LastName]"
+                      name="LastName" />
+                    <outputColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Error Output].Columns[Suffix]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Error Output].Columns[Suffix]"
+                      name="Suffix" />
+                    <outputColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Error Output].Columns[CompanyName]"
+                      dataType="wstr"
+                      length="128"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Error Output].Columns[CompanyName]"
+                      name="CompanyName" />
+                    <outputColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Error Output].Columns[SalesPerson]"
+                      dataType="wstr"
+                      length="256"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Error Output].Columns[SalesPerson]"
+                      name="SalesPerson" />
+                    <outputColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Error Output].Columns[EmailAddress]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Error Output].Columns[EmailAddress]"
+                      name="EmailAddress" />
+                    <outputColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Error Output].Columns[Phone]"
+                      dataType="wstr"
+                      length="25"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Error Output].Columns[Phone]"
+                      name="Phone" />
+                    <outputColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Error Output].Columns[PasswordHash]"
+                      codePage="1252"
+                      dataType="str"
+                      length="128"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Error Output].Columns[PasswordHash]"
+                      name="PasswordHash" />
+                    <outputColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Error Output].Columns[PasswordSalt]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Error Output].Columns[PasswordSalt]"
+                      name="PasswordSalt" />
+                    <outputColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Error Output].Columns[rowguid]"
+                      dataType="guid"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Error Output].Columns[rowguid]"
+                      name="rowguid" />
+                    <outputColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Error Output].Columns[ModifiedDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Error Output].Columns[ModifiedDate]"
+                      name="ModifiedDate" />
+                    <outputColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Customer Import.Paths[Derived Column Output]"
+              endId="Package\Customer Import\Destination Customer.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\Customer Import\Add Derived Columns.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Customer Import.Paths[OLE DB Source Output]"
+              endId="Package\Customer Import\Add Derived Columns.Inputs[Derived Column Input]"
+              name="OLE DB Source Output"
+              startId="Package\Customer Import\Source Customer.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="160,42.6666666666667"
+          Id="Package\Customer Import"
+          TopLeft="65.6249990221113,117.649997896254" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Customer Import">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="160,42.6666666666667"
+          Id="Package\Customer Import\Source Customer"
+          TopLeft="25.8928567570235,154.699997233748" />
+        <NodeLayout
+          Size="181.333333333334,42.6666666666667"
+          Id="Package\Customer Import\Destination Customer"
+          TopLeft="83.4821416131619,331.128565507531" />
+        <NodeLayout
+          Size="181.333333333334,42.6666666666667"
+          Id="Package\Customer Import\Add Derived Columns"
+          TopLeft="44.1071421998952,241.111901153823" />
+        <EdgeLayout
+          Id="Package\Customer Import.Paths[OLE DB Source Output]"
+          TopLeft="105.892856757023,197.366663900415">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="28.8809521095384,43.7452372534077"
+              Start="0,0"
+              End="28.8809521095384,36.2452372534077">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17.8726186267038" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,17.8726186267038"
+                    Point2="0,21.8726186267038"
+                    Point3="4,21.8726186267038" />
+                  <mssgle:LineSegment
+                    End="24.8809521095384,21.8726186267038" />
+                  <mssgle:CubicBezierSegment
+                    Point1="24.8809521095384,21.8726186267038"
+                    Point2="28.8809521095384,21.8726186267038"
+                    Point3="28.8809521095384,25.8726186267038" />
+                  <mssgle:LineSegment
+                    End="28.8809521095384,36.2452372534077" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Customer Import.Paths[Derived Column Output]"
+          TopLeft="134.773808866562,283.778567820489">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="39.3749994132667,47.3499976870418"
+              Start="0,0"
+              End="39.3749994132667,39.8499976870418">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.6749988435209" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,19.6749988435209"
+                    Point2="0,23.6749988435209"
+                    Point3="4,23.6749988435209" />
+                  <mssgle:LineSegment
+                    End="35.3749994132667,23.6749988435209" />
+                  <mssgle:CubicBezierSegment
+                    Point1="35.3749994132667,23.6749988435209"
+                    Point2="39.3749994132667,23.6749988435209"
+                    Point3="39.3749994132667,27.6749988435209" />
+                  <mssgle:LineSegment
+                    End="39.3749994132667,39.8499976870418" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Customer Import\Source Customer">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Customer Import\Destination Customer">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

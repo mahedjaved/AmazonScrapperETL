@@ -93,7 +93,9 @@ Firstly, we then setup a simple transformation process using the `Derived Column
  
 ![Alt text](image-1.png)
 
-S
+Once the pipeline has been set and run, the Destination table should update as expected. We can see from below that all of the entries for the **CompanyName** column have been uppercased. This concludes the steps necessary for finishing Milestone 2.
+
+![Alt text](image-3.png)
 <!-- Extracting data from the table Customer in the source database AdventureWorksLT2016
 
 We will Manipulate and uppercase the  Customer.CompanyName
