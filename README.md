@@ -113,7 +113,7 @@ I will show you how to install the source database and create the destination da
 
  ### Milestone 3
 
-Once the migration 
+Once the migration
 
 ---
 
